@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kaif x Chaudhary Bot • WhatsApp Bot</title>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+
+body{
+font-family:Inter;
+background:#0b1a1e;
+color:white;
+display:flex;
+justify-content:center;
+align-items:center;
+min-height:100vh;
+}
+
+.container{
+max-width:520px;
+width:100%;
+}
+
+.card{
+background:#122227;
+border-radius:25px;
+padding:25px;
+}
+
+.logo{
+display:flex;
+align-items:center;
+gap:10px;
+margin-bottom:20px;
+}
+
+.logo i{
+font-size:30px;
+color:#25d366;
+}
+
+.logo h1{
+font-size:22px;
+font-weight:800;
+}
+
+.qr-section{
+text-align:center;
+margin:20px 0;
+}
+
+.qr-wrapper{
+background:white;
+padding:10px;
+border-radius:12px;
+display:inline-block;
+}
+
+.qr-wrapper img{
+max-width:220px;
+}
+
+.form-control{
+width:100%;
+padding:12px;
+border-radius:12px;
+border:1px solid #25d36633;
+background:#00000055;
+color:white;
+margin-bottom:12px;
+}
+
+button{
+width:100%;
+padding:14px;
+border:none;
+border-radius:100px;
+background:#25d366;
+color:white;
+font-weight:700;
+cursor:pointer;
+}
+
+.social{
+margin-top:20px;
+display:flex;
+flex-direction:column;
+gap:10px;
+}
+
+.social a{
+text-decoration:none;
+padding:14px;
+border-radius:100px;
+text-align:center;
+color:white;
+background:#1b1f23;
+}
+
+.footer{
+text-align:center;
+margin-top:20px;
+font-size:12px;
+color:#aaa;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="card">
+
+<div class="logo">
+<i class="fab fa-whatsapp"></i>
+<h1>Kaif x Chaudhary Bot</h1>
+</div>
+
+<div class="qr-section">
+
+<h3>Scan to Connect</h3>
+
+<div id="qrContainer">
+
+<p>Waiting for QR Code...</p>
+
+</div>
+
+</div>
+
+<h3>Configuration</h3>
+
+<textarea id="sourceJids" class="form-control" placeholder="Source JIDs"></textarea>
+
+<textarea id="targetJids" class="form-control" placeholder="Target JIDs"></textarea>
+
+<input id="oldTextRegex" class="form-control" placeholder="Old text">
+
+<input id="newText" class="form-control" placeholder="New text">
+
+<button onclick="saveConfig()">Save Settings</button>
+
+<div class="social">
+
+<a href="#">Join Channel</a>
+
+<a href="#">GitHub</a>
+
+<a href="#">Owner</a>
+
+</div>
+
+<div class="footer">
+
+<p>Kaif x Chaudhary Bot Dashboard</p>
+
+<p>© 2026 Kaif x Chaudhary</p>
+
+</div>
+
+</div>
+
+</div>
+
+<script>
+
+async function loadConfig(){
+
+try{
+
+const res = await fetch('/api/config')
+
+const data = await res.json()
+
+document.getElementById('sourceJids').value=data.sourceJids?.join(', ')||''
+
+document.getElementById('targetJids').value=data.targetJids?.join(', ')||''
+
+document.getElementById('oldTextRegex').value=data.oldTextRegex?.join(', ')||''
+
+document.getElementById('newText').value=data.newText||''
+
+}catch(e){
+
+console.log(e)
+
+}
+
+}
+
+async function saveConfig(){
+
+const sourceJids=document.getElementById('sourceJids').value.split(',').map(j=>j.trim())
+
+const targetJids=document.getElementById('targetJids').value.split(',').map(j=>j.trim())
+
+const oldTextRegex=document.getElementById('oldTextRegex').value.split(',').map(j=>j.trim())
+
+const newText=document.getElementById('newText').value
+
+await fetch('/api/config',{
+
+method:'POST',
+
+headers:{'Content-Type':'application/json'},
+
+body:JSON.stringify({sourceJids,targetJids,oldTextRegex,newText})
+
+})
+
+alert("Saved!")
+
+}
+
+async function checkStatus(){
+
+try{
+
+const r=await fetch('/api/status')
+
+const data=await r.json()
+
+const qr=document.getElementById('qrContainer')
+
+if(data.qr){
+
+qr.innerHTML=`<div class="qr-wrapper"><img src="${data.qr}"></div>`
+
+}else if(data.connected){
+
+qr.innerHTML=`<h3>WhatsApp Connected</h3>`
+
+}else{
+
+qr.innerHTML=`<p>Generating QR...</p>`
+
+}
+
+}catch(e){
+
+console.log(e)
+
+}
+
+}
+
+loadConfig()
+
+checkStatus()
+
+setInterval(checkStatus,3000)
+
+</script>
+
+</body>
+</html>
