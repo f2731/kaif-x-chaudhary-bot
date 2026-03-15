@@ -1,17 +1,25 @@
-​🚀 Kaif x Chaudhary Bot
-​Welcome to the Kaif x Chaudhary Bot! This is a high-performance WhatsApp automation tool designed for seamless Auto-Forwarding and dynamic Auto-Text Replacement. Whether you are managing channels or automating personal workflows, this bot has you covered.
-​🌟 Key Features
-​⚡ Auto-Forwarding: Automatically forward messages from specific chats, groups, or channels to your desired destination.
-​✍️ Auto-Text Replacement: Set custom rules to swap words or phrases instantly (e.g., replace "Old Link" with "New Link") during the forwarding process.
-​🐳 Docker Ready: Includes a Dockerfile for easy deployment on any server.
-​☁️ Heroku Support: Pre-configured with a Procfile and Aptfile for one-click hosting on platforms like Heroku or Railway.
-​📁 Clean Architecture: Organized file structure with dedicated folders for assets, public, and custom libraries (kaiflibs).
-​🛠️ Installation & Setup
-​1. Local Deployment
+# 🤖 Kaif x Chaudhary Bot 🚀
 
-Bash
+Welcome to the official repository of **Kaif x Chaudhary Bot**. A powerful, high-speed WhatsApp automation tool designed for seamless message management.
+
+---
+
+## 🌟 Key Features
+
+* **⚡ Auto-Forwarding:** Automatically forward messages from one chat/group to another without manual intervention.
+* **✍️ Auto-Text Replacement:** Automatically swap specific words, links, or phrases during the forwarding process (e.g., replacing "Join here" with your own link).
+* **🐳 Docker Ready:** Fully containerized for easy deployment using the included `Dockerfile`.
+* **☁️ Multi-Platform Support:** Pre-configured with `Procfile` and `Aptfile` for Heroku, Railway, or Koyeb.
+* **📂 Organized Structure:** Modular codebase with custom libraries in `kaiflibs/`.
+
+---
+
+## 🛠️ Installation & Setup
+
+### 1. Local Deployment
+```bash
 # Clone the repository
-git clone https://github.com/your-username/kaif-x-chaudhary-bot.git
+git clone [https://github.com/your-username/kaif-x-chaudhary-bot.git](https://github.com/your-username/kaif-x-chaudhary-bot.git)
 
 # Enter the directory
 cd kaif-x-chaudhary-bot
@@ -21,4 +29,3 @@ npm install
 
 # Start the bot
 node Erndex.js
-new
